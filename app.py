@@ -577,7 +577,6 @@ def signup():
             flash('Email address already exists')
             return redirect(url_for('signup'))
         
-        cursor = db.cursor()
         # Insert the new user into the database
         insert_query = "INSERT INTO pelanggan (nama, email, password) VALUES (%s, %s, %s)"
         cursor.execute(insert_query, (nama, email, password))
@@ -619,23 +618,20 @@ def signout():
 @app.route('/daftar_mobil/', methods=['GET', 'POST'])
 def daftar_mobil():
     id_pelanggan = session.get('id_pelanggan')
+    cursor = db.cursor()
     if request.method == 'POST':
         kode_mobil = request.form.get('kode_mobil')
         merk = request.form.get('merk')
         id_pelanggan = session['id_pelanggan']
         sewa_per_hari = request.form.get('sewa_per_hari')
 
-        cursor = db.cursor()
         cursor.execute("INSERT INTO keranjang (kode_mobil,merk, mobil_per_hari, id_pelanggan) VALUES (%s, %s, %s, %s)", 
                                (kode_mobil, merk, sewa_per_hari, id_pelanggan))
         db.commit()
         cursor.close()
         flash('Registration successful!','success')
-    cursor = db.cursor()
     cursor.execute("select id_driver, name from driver")
     drivers = cursor.fetchall()
-    cursor.close()
-    cursor = db.cursor()
     cursor.execute('SELECT daftar_mobil.kode_mobil,merk,bahan_bakar,gambar, detail_mobil.sewa_per_hari from daftar_mobil join detail_mobil on daftar_mobil.kode_mobil = detail_mobil.kode_mobil where detail_mobil.status="Ready" group by kode_mobil')
     daftar_mobil_landinguser = cursor.fetchall()
     cursor.close()

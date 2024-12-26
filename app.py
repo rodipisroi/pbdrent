@@ -7,6 +7,7 @@ import time
 import random
 import openpyxl
 from io import BytesIO
+import logging
 app = Flask (__name__)
 
 app.secret_key = 'rodip'
@@ -21,8 +22,9 @@ db = connector.connect(
 if db.is_connected():
     print('berhasil konek ke database')
 
-
-id_pelanggan = ''
+if not app.debug:
+    logging.basicConfig(level=logging.DEBUG)
+    app.logger.addHandler(logging.StreamHandler())
 #halaman awal
 @app.route('/')
 def landing():
@@ -616,7 +618,7 @@ def signout():
 
 @app.route('/daftar_mobil/', methods=['GET', 'POST'])
 def daftar_mobil():
-    email = ''
+    id_pelanggan = session.get('id_pelanggan')
     if request.method == 'POST':
         kode_mobil = request.form.get('kode_mobil')
         merk = request.form.get('merk')
@@ -636,7 +638,8 @@ def daftar_mobil():
     cursor = db.cursor()
     cursor.execute('SELECT daftar_mobil.kode_mobil,merk,bahan_bakar,gambar, detail_mobil.sewa_per_hari from daftar_mobil join detail_mobil on daftar_mobil.kode_mobil = detail_mobil.kode_mobil where detail_mobil.status="Ready" group by kode_mobil')
     daftar_mobil_landinguser = cursor.fetchall()
-    if email == '':
+    cursor.close()
+    if not id_pelanggan:
         return render_template('daftar_mobil.html', landinguser = daftar_mobil_landinguser)
     return render_template('daftar_mobil.html', drivers = drivers, landinguser = daftar_mobil_landinguser, email = session['email'])
 

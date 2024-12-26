@@ -16,7 +16,7 @@ db = connector.connect(
     user="rodip", 
     password="Rentalmobil123#", 
     host="pbdrent.mysql.database.azure.com", 
-    port=3306, database="fp_rentalmobil
+    port=3306, database="fp_rentalmobil"
 )
 if db.is_connected():
     print('berhasil konek ke database')

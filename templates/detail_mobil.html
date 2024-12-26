@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add mobil</title>
+    <!-- boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- css link -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_style.css') }}">
+</head>
+
+<body>
+    {% include 'admin_header.html' %}
+    <section class="playlist-form">
+        <h1 class="heading">Create Mobil</h1>
+        
+        <form action="{{ url_for('detail_mobil') }}" method="POST" enctype="multipart/form-data">
+            <p>Kode Mobil <span>*</span></p>
+            <input type="text" name="kode_mobil" maxlength="150" required placeholder="Enter kode mobil" class="btn">
+            <p>Plat Nomor <span>*</span></p>
+            <input type="text" name="plat_no" maxlength="150" required placeholder="Enter plat nomor" class="btn">
+            <p>Merk <span>*</span></p>
+            <input type="text" name="merk" maxlength="150" required placeholder="Enter merk" class="btn">
+            <p>Sewa Per Hari <span>*</span></p>
+            <input type="text" name="sewa_per_hari" maxlength="150" required placeholder="Enter sewa per hari" class="btn">
+            <p>Status <span>*</span></p>
+            <select name="status" class="box" required>
+                <option value="" selected disabled>---select status---</option>
+                <option value="Ready">Ready</option>
+                <option value="Maintentance">Maintentance</option>
+            </select>
+            <p>Bahan Bakar <span>*</span></p>
+            <input type="text" name="bahan_bakar" maxlength="150" required placeholder="Enter bahan bakar" class="btn">
+            <p>Tambah Gambar <span>*</span></p>
+            <input type="file" name="gambar" accept="image/*" required class="box">
+            <input type="submit" name="submit" value="Create Playlist" class="btn">
+        </form>
+
+    </section>
+    <script type="text/javascript" src="../js/admin_script.js"></script>
+        <!-- script -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                  {% for category, message in messages %}
+                      swal("berhasil!", "{{ message }}", "{{ category }}");
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}
+        </script>
+        <!-- end -->
+</body>
+
+</html>

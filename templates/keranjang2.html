@@ -1,0 +1,112 @@
+{%extends "base.html"%}
+
+{%block title%}
+Keranjang
+{%endblock%}
+
+{%block konten%}
+
+{% if 'email' in session %}
+{%include "navbaruser.html"%}
+{%else%}
+{%include "navbar.html"%}
+{%endif%}
+  <div class="bg-second w-100">
+	<div class="container w-80">
+        </div>
+        <div class="">
+            <table class="table">
+                <thead class="table-dark">
+                  <tr>
+                    <th>Merk</th>
+                    <th>Biaya Sewa Mobil Per Hari</th>
+                    <th>Driver</th>
+                    <th>Biaya Sewa Driver Per Hari</th>
+                    <th>Total Sewa Per Hari</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for row in keranjang_item %}
+                        <tr>
+                            <td>{{row.1}}</td>
+                            <td>{{row.2}}</td>
+                            <td>
+                              {%if row.3 == ''%}
+                              <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Tambah Driver</a>
+              <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="loginModalLabel">Buat pesanan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="{{ url_for('keranjang') }}" method="POST" enctype="multipart/form-data">
+                            <!-- {% for drv in drivers %}
+                            <input value="{{drv.6}}" type="text" name="driver_per_hari" maxlength="150" class="hidden-input">
+                            <input value="{{drv.1}}" type="text" name="name" maxlength="150" class="hidden-input">
+                            {%endfor%} -->
+                            <input value="{{row.0}}" type="text" name="no_item" maxlength="150" class="hidden-input">
+                            <input value="" type="text" name="kode_mobil" maxlength="150" class="hidden-input">
+                                <div class="mb-3">
+                                 <label class="mb-2" for="driver" class="control-label">Driver</label>	
+                                <select name="driver" id="driver" class="form-control border-1 border-black">
+                                    <option value="">None</option>
+                                    {% for drv in drivers %}
+                                        <option class="text-black" value="{{drv.0}}">{{drv.1}}</option>
+                                    {% endfor %}								
+                                </select>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">Buat pesanan</button>
+                              </form>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                              {%else%}
+                              {{row.3}}
+                              {%endif%}
+                              </td>
+                            <td>{{row.4}}</td>
+                            <td>{{row.2+row.4}}</td>
+                            <td>
+                                <a href="/keranjang/hapus/{{row.0}}" class="btn btn-danger"
+                                    onclick="return confirm('yakin akan menghapus {{row.1}} ?')"> Hapus </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+              <form action="/your-action-url" method="POST">
+                <div class="mb-3">
+                    <label for="startDate" class="form-label">Pilih Tanggal</label>
+                    <input type="text" class="form-control" id="startDate" name="start_date" placeholder="Pilih tanggal" autocomplete="off">
+                </div>
+                <div class="mb-3">
+                    <label for="duration" class="form-label">Durasi (Hari)</label>
+                    <input type="number" class="form-control" id="duration" name="duration" placeholder="Masukkan durasi dalam hari" min="1">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+              Sewa per hari = {{sewa_per_hari[0]}}
+        </div>
+		
+	</div>
+</div>
+<script type="text/javascript" src="../js/admin_script.js"></script>
+        <!-- script -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                  {% for category, message in messages %}
+                      swal("berhasil!", "{{ message }}", "{{ category }}");
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}
+        </script>
+        <!-- end -->
+{%endblock%}

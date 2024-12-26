@@ -1,0 +1,60 @@
+{%extends "base.html"%}
+
+{%block title%}
+Keranjang
+{%endblock%}
+
+{%block konten%}
+
+{% if 'email' in session %}
+{%include "navbaruser.html"%}
+{%else%}
+{%include "navbar.html"%}
+{%endif%}
+<div class="bg-second w-100">
+  <div class="container w-80">
+      <div>
+          <table class="table">
+              <thead class="table-dark">
+                  <tr>
+                      <th>Mobil</th>
+                      <th>Driver</th>
+                      <th>Tanggal mulai</th>
+                      <th>Durasi</th>
+                      <th>Total</th>
+                      <th>Alamat</th>
+                      <th>Status</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for row in keranjang_item %}
+                      <tr>
+                          <td>{{ row[1] }}</td>
+                          <td>{{ row[2] }}</td>
+                          <td>{{ row[3] }}</td>
+                          <td>{{ row[4] }}</td>
+                          <td>{{row[5]}} </td>
+                          <td>{{row[6]}} </td>
+                          <td>{{row[7]}} </td>
+                      </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/admin_script.js') }}"></script>
+<!-- script -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          {% for category, message in messages %}
+              swal("berhasil!", "{{ message }}", "{{ category }}");
+          {% endfor %}
+      {% endif %}
+  {% endwith %}
+</script>
+<!-- end -->
+{%endblock%}

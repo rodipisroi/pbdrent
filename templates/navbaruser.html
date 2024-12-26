@@ -1,0 +1,38 @@
+{%extends "base.html"%}
+
+{%block konten%}
+    <div class="w-100">
+        <nav class="d-flex navbar navbar-expand-lg bg-transparent navbar-dark align-items-center z-3">
+            <div class="container-fluid px-5 mx-5">
+                <a class="navbar-brand text-third" href="#" style="font-family: 'Archivo Black'; font-size: 40px;">PBD RENT</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarNav">
+                    <ul class="navbar-nav d-flex align-items-center">
+                        <li class="nav-item mx-4">
+                            <a class="nav-link text-first poppins-regular" href="{{url_for('daftar_mobil')}}" style="font-size: 18px;">Daftar Mobil</a>
+                        </li>
+                        <li class="nav-item mx-4">
+                            <a class="nav-link text-first poppins-regular" href="{{url_for('daftar_driver')}}" style="font-size: 18px;">Daftar driver</a>
+                        </li>
+                        <li class="nav-item mx-4">
+                            <a class="nav-link text-first poppins-regular" href="{{url_for('keranjang')}}" style="font-size: 18px;">Keranjang</a>
+                        </li>
+                        <li class="nav-item mx-4">
+                            <a class="nav-link text-first poppins-regular" href="{{url_for('transaksi')}}" style="font-size: 18px;">Transaksi</a>
+                        </li>
+                        <li class="nav-item mx-4">
+                            <a class="nav-link text-first poppins-regular" href="{{url_for('profileuser')}}" style="font-size: 18px;">Profile</a>
+                        </li>
+                        <li class="nav-item mx-4">
+                            <a class="nav-link text-first poppins-regular bg-third rounded-3 px-3" href="{{url_for('signout')}}" style="font-size: 18px;">Logout</a>   
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+{%endblock%}

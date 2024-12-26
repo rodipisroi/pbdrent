@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_style.css') }}">
+</head>
+<body>
+    {% include 'admin_header.html' %}
+    <section class="dashboard">
+        <h1 class="heading">dashboard</h1>
+
+        <div class="box-container">
+            <div class="box">
+                <p>Total Mobil {{ total_mobil }}</p>
+                <a href="{{ url_for('detail_mobil') }}" class="btn">Add New Mobil</a>
+            </div>
+            <div class="box">
+                <p>total Driver {{total_driver}}</p>
+                <a href="{{ url_for('driver') }}" class="btn"> add new Driver</a>
+            </div>
+            <div class="box">
+                <p>Transaksi Masuk</p>
+                <a href="{{ url_for('proses') }}" class="btn">Lihat Transaksi</a>
+            </div>
+            <div class="box">
+                <p>Transaksi Berlangsung</p>
+                <a href="{{ url_for('transaksi_berlangsung') }}" class="btn">Lihat Transaksi</a>
+            </div>
+            <div class="box">
+                <p>Riwayat Transaksi</p>
+                <a href="{{ url_for('transaksi_selesai') }}" class="btn">Lihat Transaksi</a>
+            </div>
+            <div class="box">
+                <p>Logout</p>
+                <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/admin_script.js') }}"></script>
+</body>
+</html>

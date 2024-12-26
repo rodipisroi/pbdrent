@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Added Mobil</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin_style.css') }}"
+    />
+    <style>
+      .flex-btn-container {
+        display: flex;
+        gap: 10px;
+      }
+      .flex-btn-container form {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    {% include 'admin_header.html' %}
+    <section class="playlists">
+      <h1 class="heading">Daftar Admin</h1>
+        <div class="admin-list">
+          <div class="admin-card">
+              <img src="../static/images/rodip.JPG" alt="Foto Admin 1">
+              <h3>Rodif Zainul Isro`i</h3>
+              <p>22.83.0767</p>
+          </div>
+          <div class="admin-card">
+              <img src="../static/images/beryl.jpeg" alt="Foto Admin 1">
+              <h3>Beryl Az-Zandany P</h3>
+              <p>22.83.0813</p>
+          </div>
+          <div class="admin-card">
+              <img src="../static/images/bima.jpeg" alt="Foto Admin 1">
+              <h3>Bima Rohmad Hasanudin</h3>
+              <p>22.83.0887</p>
+          </div>
+          <div class="admin-card">
+              <img src="../static/images/satria.jpeg" alt="Foto Admin 1">
+              <h3>Satria Kurniawan</h3>
+              <p>21.83.0736</p>
+          </div>
+          
+      </div>
+        
+
+    </section>
+    <!-- script -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, message in messages %}
+                  swal("berhasil!", "{{ message }}", "{{ category }}");
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
+    </script>
+    <!-- end -->
+    <script src="{{ url_for('static', filename='js/admin_script.js') }}"></script>
+  </body>
+</html>

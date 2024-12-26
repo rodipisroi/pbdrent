@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Mobil</title>
+    <!-- boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- CSS link -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_style.css') }}">
+</head>
+<body>
+    {% include 'admin_header.html' %}
+    <section class="playlist-form">
+        <h1 class="heading">Update Mobil</h1>
+        <form action="{{ url_for('update_plat', plat_no=platdetail[0]) }}" method="post" enctype="multipart/form-data">
+            <!-- <input type="hidden" name="kode_mobil" value="{{ platdetail[0] }}"> -->
+            
+            <p>Plat Nomor <span>*</span></p>
+            <input type="text" name="plat_no" maxlength="150" required value="{{ platdetail[0] }}" placeholder="Enter plat nomor" class="btn">
+            
+            <p>Sewa Per Hari <span>*</span></p>
+            <input type="number" name="sewa_per_hari" maxlength="150" required value="{{ platdetail[1] }}" placeholder="Enter sewa per hari" class="btn">
+            
+            <p>Status <span>*</span></p>
+            <select name="status" class="box" required>
+                <option value="" disabled>---select status---</option>
+                <option value="Ready" {% if platdetail[2] == 'Ready' %} selected {% endif %}>Ready</option>
+                <option value="Maintenance" {% if platdetail[2] == 'Maintenance' %} selected {% endif %}>Maintenance</option>
+            </select>
+            
+            <input type="submit" name="submit" value="Update Mobil" class="btn">
+        </form>
+    </section>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/admin_script.js') }}"></script>
+    <!-- script -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        swal("Berhasil!", "{{ message }}", "{{ category }}");
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </script>
+</body>
+</html>

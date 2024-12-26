@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Added Mobil</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin_style.css') }}"
+    />
+    <style>
+      .flex-btn-container {
+        display: flex;
+        gap: 10px;
+      }
+      .flex-btn-container form {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    {% include 'admin_header.html' %}
+    <section class="playlists">
+      <h1 class="heading">Added Mobil</h1>
+      <div class="box-container">
+        <div class="add">
+          <a href="{{ url_for('detail_mobil') }}"><i class="bx bx-plus"></i></a>
+        </div>
+        {% if mobil_data %} {% for mobil in mobil_data %}
+        <div class="box">
+          <div class="flex">
+            <div>
+              <i
+                class="bx bx-dots-vertical-rounded"
+                style="color: {% if mobil[4] == 'Ready' %}limegreen{% else %}red{% endif %}"
+              ></i>
+              <span
+                style="color: {% if mobil[4] == 'Maintenance' %}limegreen{% else %}red{% endif %}"
+                >{{ mobil[4] }}</span
+              >
+            </div>
+            <div><i class=""></i><span>{{ mobil[1] }}</span></div>
+          </div>
+          <div class="thumb">
+            <img
+              src="{{ url_for('static', filename='images/' ~ mobil[2]) }}"
+              alt="Image of Mobil"
+            />
+          </div>
+          <div class="flex">
+            <div><i class=""></i><span>Stok {{ mobil[5] }}</span></div>
+            <div><i class=""></i><span>Rp {{ mobil[3] }}/Hari</span></div>
+          </div>
+          <div class="flex-btn-container">
+            <form
+              action="{{ url_for('listmobil', kode_mobil=mobil[0]) }}"
+              method="get"
+            >
+              <button type="submit" class="btn">Detail</button>
+            </form>
+            <form
+              action="{{ url_for('delete_mobil', kode_mobil=mobil[0]) }}"
+              method="post"
+            >
+              <button type="submit" class="btn">Delete</button>
+            </form>
+          </div>
+        </div>
+        {% endfor %} {% else %}
+        <p class="empty">No mobil added yet</p>
+        {% endif %}
+      </div>
+    </section>
+    <!-- script -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, message in messages %}
+                  swal("berhasil!", "{{ message }}", "{{ category }}");
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
+    </script>
+    <!-- end -->
+    <script src="{{ url_for('static', filename='js/admin_script.js') }}"></script>
+  </body>
+</html>

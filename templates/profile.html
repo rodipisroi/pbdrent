@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <!-- boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- css link -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_style.css') }}">
+</head>
+
+<body>
+    {% include 'admin_header.html' %}
+    <div class="form-container" style="min-height:calc(100vh - 19rem); padding: 5rem 0;">
+        <form action="{{ url_for('profile') }}" method="post" enctype="multipart/form-data" class="register">
+            <h3>Update profile</h3>
+            <div class="flex">
+                <div class="col">
+                    <p>Your Username <span>*</span></p>
+                    <input type="text" name="username" placeholder="Enter new username" maxlength="50" required class="box" value="{{ admin[0] }}">
+                    <p>New Password <span>*</span></p>
+                    <input type="password" name="password" placeholder="Enter new password" maxlength="20" required class="box">
+                </div>
+            </div>
+            <input type="submit" name="submit" class="btn" value="Update Profile" onclick="alert('Update berhasil')">
+            
+        </form>
+    </div>
+</body>
+
+</html>

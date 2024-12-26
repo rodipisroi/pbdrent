@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>admin page</title>
+
+    <!-- boxicons -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <!-- css link -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin_style.css') }}"
+    />
+  </head>
+  <body>
+    {% include 'admin_header.html' %}
+    <section class="playlist-form">
+      <h1 class="heading">Update Mobil</h1>
+      <form action="{{ url_for('listmobil', kode_mobil=detail[0]) }}" method="post" enctype="multipart/form-data">
+          <!-- <input type="hidden" name="kode_mobil" value="{{ detail[0] }}"> -->
+          
+          
+          <p>Merk <span>*</span></p>
+          <input type="text" name="merk" maxlength="150" required value="{{ detail[1] }}" placeholder="Enter merk" class="btn">
+      
+          
+          <p>Bahan Bakar <span>*</span></p>
+          <input type="text" name="bahan_bakar" maxlength="150" required value="{{ detail[2] }}" placeholder="Enter bahan bakar" class="btn">
+          
+          <p>Current Image</p>
+          <img src="{{ url_for('static', filename='images/' ~ detail[3]) }}" alt="Image of Mobil" style="max-width: 200px;">
+          
+          <p>Upload New Image <span>*</span></p>
+          <input type="file" name="gambar" accept="image/*" class="box">
+          
+          <input type="submit" name="submit" value="Update Mobil" class="btn">
+      </form>
+  </section>
+    <section class="playlists">
+      <h1 class="heading">Data mobil</h1>
+      <div class="box-container">
+        <div class="add">
+          <a href="{{url_for('tambah_plat', kode_mobil=detail[0]) }}"><i class="bx bx-plus"></i></a>
+        </div>
+      </div>
+    </section>
+    <div class="container">
+      <div class="product-display">
+        <table class="product-display-table">
+          <thead>
+            <tr>
+              <th class="col-md-1">Plat no</th>
+              <th class="col-md-3">Sewa per hari</th>
+              <th class="col-md-4">Status</th>
+              <th class="col-md-2">Aksi</th>
+            </tr>
+          </thead>
+          {% for data in listmobil %}
+          <tr>
+            <td>{{ data[0] }}</td>
+            <td>{{ data[1] }}</td>
+            <td>{{ data[2] }}</td>
+            <td>
+              <a
+                href="{{ url_for('update_plat', plat_no=data[0]) }}"
+                class="btn btn-warning btn-sm"
+                >Edit</a
+              >
+              <a
+                href="{{ url_for('delete_plat', kode_mobil=detail[0], plat_no=data[0]) }}"
+                class="btn btn-warning btn-sm"
+                >Delete</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+
+    <!-- script -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, message in messages %}
+                  swal("berhasil!", "{{ message }}", "{{ category }}");
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
+    </script>
+    <!-- end -->
+    <script src="{{ url_for('static', filename='js/admin_script.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add mobil</title>
+    <!-- boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- css link -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_style.css') }}">
+</head>
+
+<body>
+    {% include 'admin_header.html' %}
+    <section class="playlist-form">
+        <h1 class="heading">Create Driver</h1>
+        
+        <form action="{{ url_for('tambah_driver') }}" method="POST" enctype="multipart/form-data">
+            <p>Nama Lengkap <span>*</span></p>
+            <input type="text" name="name" maxlength="150" required placeholder="Masukkan Data" class="btn">
+            <p>Alamat <span>*</span></p>
+            <input type="text" name="alamat" maxlength="150" required placeholder="Masukkan Data" class="btn">
+            <p>Nomor Handphone<span>*</span></p>
+            <input type="text" name="phone" maxlength="150" required placeholder="Masukkan Data" class="btn">
+            <p>Tahun Lahir <span>*</span></p>
+            <input type="text" name="tahun_lahir" maxlength="150" required placeholder="Masukkan Data" class="btn">
+            <p>Lisensi<span>*</span></p>
+            <input type="text" name="lisensi" maxlength="150" required placeholder="Masukkan Data" class="btn">
+            <p>Sewa Per Hari<span>*</span></p>
+            <input type="text" name="sewa_per_hari" maxlength="150" required placeholder="Masukkan Data" class="btn">
+            <p>Tambahkan identitas driver <span>*</span></p>
+            <input type="file" name="image" accept="image/*" required class="box">
+            <input type="submit" name="submit" value="Create Playlist" class="btn">
+        </form>
+    </section>
+    <script type="text/javascript" src="../js/admin_script.js"></script>
+        <!-- script -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                  {% for category, message in messages %}
+                      swal("berhasil!", "{{ message }}", "{{ category }}");
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}
+        </script>
+        <!-- end -->
+</body>
+
+</html>

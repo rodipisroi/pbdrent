@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <!-- boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin_style.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <img src="{{ url_for('static', filename='images/fun.jpg') }}" class="form-img" style="left: -1%;">
+        <form action="/register" method="post" enctype="multipart/form-data" class="register">
+            {% if mesage is defined and mesage %}
+            <div class="alert alert-warning">{{ mesage }}</div>
+            {% endif %}
+            <h3>Register now</h3>
+            <div class="flex">
+                <div class="col">
+                    <p>your name<span>*</span></p>
+                    <input type="text" name="name" placeholder="masukan username" maxlength="50" required class="box">
+                    <p>your email<span>*</span></p>
+                    <input type="email" name="email" placeholder="masukan email" maxlength="20" required class="box">
+                    <p>your password<span>*</span></p>
+                    <input type="password" name="password" placeholder="masukan password" maxlength="20" required class="box">
+                    <p>Phone<span>*</span></p>
+                    <input type="phone" name="phone" placeholder="konfirmasi nomor handphoen anda" maxlength="20" required class="box">
+                </div>
+            </div>
+            <p class="link">already have an account? <a href="{{url_for('login')}}">Login now</a></p>
+            <input type="submit" name="submit" class="btn" value="register now">
+        </form>
+    </div>
+
+   <!-- script -->
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   <script>
+       document.addEventListener('DOMContentLoaded', function() {
+           const messages = {{ get_flashed_messages(with_categories=true) | tojson }};
+           messages.forEach(function(message) {
+               const category = message[0];
+               const text = message[1];
+               swal(text, "", category);
+           });
+       });
+   </script>
+   <!-- end -->
+</body>
+</html>

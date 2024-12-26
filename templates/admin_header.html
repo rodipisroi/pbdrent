@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <section class="flex">
+            <a href="{{ url_for('dashboard') }}"> 
+                <img src="{{ url_for('static', filename='images/logo.png') }}" width="50px">
+            </a>
+            
+            <div class="icons">
+                <div id="menu-btn" class="bx bx-list-plus"></div>
+                <div id="search-btn" class="bx bx-search-alt"></div>
+                <div id="user-btn" class="bx bxs-user"></div>
+            </div>
+            <div class="profile">
+                {% if 'username' in session %}
+                    <h3>{{ username }}</h3>
+                    <div id="flex-btn" style="margin-bottom: 10px;">
+                        <a href="{{url_for('profile') }}" class="btn">Profile</a>
+                    </div>
+                    <div id="flex-btn">
+                        <a href="{{url_for('logout') }}" onclick="return confirm('Logout from this website?');" class="btn">Logout</a>
+                    </div>
+                {% else %}
+                    <h3>Please Login Or Register</h3>
+                    <div id="flex-btn">
+                        <a href="{{ ('login') }}" class="btn">Login</a>
+                        <a href="{{('register') }}" class="btn">Register</a>
+                    </div>
+                {% endif %}
+            </div>
+            
+        </section>
+    </header>
+    <div class="side-bar">
+        <div class="profile">
+            {% if 'username' in session %}
+                <h3>Welcome, {{ username }}</h3>
+            {% else %}
+                <h3>Please Login Or Register</h3>
+                <div id="flex-btn">
+                    <a href="{{ url_for('login') }}" class="btn">Login</a>
+                    <a href="{{('register') }}" class="btn">Register</a>
+                </div>
+            {% endif %}
+        </div>
+        <nav class="navbar">
+            <a href="{{ url_for('dashboard') }}"><i class="bx bxs-home-heart"></i><span>Home</span></a>
+            <a href="{{ url_for('daftaradmin') }}"><i class="bx bxs-home-heart"></i><span>Daftar Admin</span></a>
+            <a href="{{ url_for('mobil') }}"><i class="bx bxs-receipt"></i><span>Daftar Mobil</span></a>
+            <a href="{{ url_for('driver') }}"><i class="bx bxs-receipt"></i><span>Detail Driver</span></a>
+            <a href="{{ url_for('proses') }}"><i class="bx bxs-chat"></i><span>Transaksi Masuk</span></a>
+            <a href="{{ url_for('transaksi_berlangsung') }}"><i class="bx bxs-chat"></i><span>Transaksi Berlangsung</span></a>
+            <a href="{{ url_for('transaksi_selesai') }}"><i class="bx bxs-chat"></i><span>Transaksi Selesai</span></a>
+
+        </nav>
+    </div>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

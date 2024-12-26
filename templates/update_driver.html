@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Driver</title>
+    <!-- boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- CSS link -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_style.css') }}">
+</head>
+<body>
+    {% include 'admin_header.html' %}
+    <section class="playlist-form">
+        <h1 class="heading">Update Driver</h1>
+        <form action="{{ url_for('update_driver', id_driver=driver[0]) }}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id_driver" value="{{ driver[0] }}">
+            <p>Nama Lengkap <span>*</span></p>
+            <input type="text" name="name" maxlength="150" required value="{{ driver[1] }}" class="btn">
+            <p>Alamat <span>*</span></p>
+            <input type="text" name="alamat" maxlength="150" required value="{{ driver[2] }}" class="btn">
+            <p>Nomor Handphone <span>*</span></p>
+            <input type="text" name="phone" maxlength="150" required value="{{ driver[3] }}" class="btn">
+            <p>Umur <span>*</span></p>
+            <input type="text" name="umur_lahir" maxlength="150" required value="{{ driver[4] }}" class="box">
+            <p>Lisensi <span>*</span></p>
+            <input type="text" name="lisensi" required value="{{ driver[5] }}" class="btn">
+            <p>Sewa_per_hari <span>*</span></p>
+            <input type="text" name="Sewa_per_hari" required value="{{ driver[6] }}" class="btn">
+            <p>Current Identitas</p>
+            <img src="{{ url_for('static', filename='images/' ~ driver[7]) }}" alt="Identitas Driver" style="max-width: 200px;">
+            <p>Upload New Identitas <span>*</span></p>
+            <input type="file" name="image" accept="image/*" class="box">
+            <input type="submit" name="submit" value="Update Driver" class="btn">
+        </form>
+    </section>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/admin_script.js') }}"></script>
+    <!-- script -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        swal("berhasil!", "{{ message }}", "{{ category }}");
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </script>
+</body>
+</html>

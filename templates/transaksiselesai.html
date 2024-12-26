@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Page</title>
+
+    <!-- boxicons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <!-- css link -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_style.css') }}" />
+</head>
+<body>
+    {% include 'admin_header.html' %}
+    <section class="playlists">
+        <h1 class="heading">Riwayat Transaksi</h1>
+        
+    </section>
+    <div class="container">
+        
+        <div class="product-display">
+            <form action="{{ url_for('transaksi_selesai') }}" method="post">
+                <button type="submit" class="btn btn-primary">Export ke Excel</button>
+            </form>
+            <table class="product-display-table">
+                <thead>
+                    <tr>
+                        <th class="col-md-1">id_transaksi</th>
+                        <th class="col-md-4">Pelanggan</th>
+                        <th class="col-md-2">Merk Mobil</th>
+                        <th class="col-md-2">Driver</th>
+                        <th class="col-md-2">tanggal_mulai</th>
+                        <th class="col-md-2">durasi(hari)</th>
+                        <th class="col-md-2">total</th>
+                        <th class="col-md-2">alamat</th>
+                        <th class="col-md-2">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaksi in transaksis %}
+                        <tr>
+                            <td>{{ transaksi[0] }}</td>
+                            <td>{{ transaksi[2] }}</td>
+                            <td>{{ transaksi[3] }}</td>
+                            <td>{{ transaksi[4] }}</td>
+                            <td>{{ transaksi[5] }}</td>
+                            <td>{{ transaksi[6] }}</td>
+                            <td>{{ transaksi[7] }}</td>
+                            <td>{{ transaksi[8] }}</td>
+                            <td>{{ transaksi[9] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- script -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    swal("berhasil!", "{{ message }}", "{{ category }}");
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </script>
+    <!-- end -->
+    <script src="{{ url_for('static', filename='js/admin_script.js') }}"></script>
+</body>
+</html>

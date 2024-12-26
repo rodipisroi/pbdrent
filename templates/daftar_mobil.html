@@ -1,0 +1,87 @@
+{% extends "base.html"%}
+{%block konten%}
+
+    {% if 'email' in session %}
+      {%include "navbaruser.html"%}
+    {%else%}
+      {%include "navbar.html"%}
+    {%endif%}
+
+    <div class="d-flex justify-content-center row">
+      {{drivers}}
+      {% for item in landinguser %}
+      <div class="card col-4 m-1" style="width: 400px">
+        <div class="w-100" style="height: 300px">
+          <img
+            src="../static/images/{{item.3}}"
+            class="card-img-top w-100"
+            style="height: 300px"
+            alt="Car 1"
+          />
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{item.1}}</h5>
+          <p class="card-text">Bahan bakar {{item.2}}</p>
+          {% if 'email' in session %}
+          <div class="row">
+            <div class="col-8">
+              <div class="w-100 fw-bold" style="font-size: 30px;">
+                Rp {{item.4}}/hari
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="d-flex w-100 rounded bg-third justify-content-center mt-1 py-1 poppins-extrabold" style="font-size: 20px;">
+                <form action="{{ url_for('daftar_mobil') }}" method="POST" enctype="multipart/form-data">
+                  <input value="{{item.0}}" type="text" name="kode_mobil" maxlength="150" class="hidden-input">
+                  <input value="{{item.1}}" type="text" name="merk" maxlength="150" class="hidden-input">
+                  <input value="{{item.4}}" type="text" name="sewa_per_hari" maxlength="150" class="hidden-input">
+                  <input type="submit" value="Pesan" class="btn poppins-semibold" style="font-size: 17px;">
+              </form>
+              <!-- <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Pesan</a>
+              <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="loginModalLabel">Buat pesanan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="{{ url_for('daftar_mobil') }}" method="POST" enctype="multipart/form-data">
+                            <input value="{{item.0}}" type="text" name="kode_mobil" maxlength="150" class="hidden-input">
+                                <div class="mb-3">
+                                    <label for="loginEmail" class="form-label">Merk mobil</label>
+                                    <input value="{{item.1}}" type="text" name="merk" class="form-control" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="loginPassword" class="form-label">Biaya sewa per hari</label>
+                                    <input value="{{item.4}}" type="text" name="sewa_per_hari" class="form-control" readonly>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Buat pesanan</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+              </div>
+            </div>
+          </div>
+          {%endif%}
+          
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+    <script type="text/javascript" src="../js/admin_script.js"></script>
+        <!-- script -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                  {% for category, message in messages %}
+                      swal("berhasil!", "{{ message }}", "{{ category }}");
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}
+        </script>
+        <!-- end -->
+{%endblock%}

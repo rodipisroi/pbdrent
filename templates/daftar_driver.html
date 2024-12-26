@@ -1,0 +1,60 @@
+{%extends "base.html"%}
+{%block konten%}
+
+    {% if 'email' in session %}
+      {%include "navbaruser.html"%}
+    {%else%}
+      {%include "navbar.html"%}
+    {%endif%}
+
+    <div class="d-flex justify-content-center row">
+      {% for item in landinguser %}
+      <div class="card col-4 m-1" style="width: 400px">
+        <div class="w-100" style="height: 300px">
+          <img
+            src="../static/images/{{item.7}}"
+            class="card-img-top w-100 mt-1"
+            style="height: 300px"
+            alt="Car 1"
+          />
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{item.1}}</h5>
+          <p class="card-text">Lisensi {{item.5}}</p>
+          {% if 'email' in session %}
+          <div class="row">
+            <div class="col-8">
+              <div class="w-100 fw-bold" style="font-size: 30px;">
+                Rp {{item.6}}/hari
+              </div>
+            </div>
+            <div class="col-4">
+              <!-- <div class="d-flex w-100 rounded bg-third justify-content-center mt-1 py-1 poppins-extrabold" style="font-size: 20px;">
+                <form action="{{ url_for('daftar_mobil') }}" method="POST" enctype="multipart/form-data">
+                  <input value="{{item.1}}" type="text" name="merk" maxlength="150" class="hidden-input">
+                  <input value="{{item.6}}" type="text" name="sewa_per_hari" maxlength="150" class="hidden-input">
+                  <input type="submit" value="Pesan" class="btn poppins-semibold" style="font-size: 17px;">
+              </form>
+              </div> -->
+            </div>
+          </div>
+          {%endif%}
+          
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+    <script type="text/javascript" src="../js/admin_script.js"></script>
+        <!-- script -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                  {% for category, message in messages %}
+                      swal("berhasil!", "{{ message }}", "{{ category }}");
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}
+        </script>
+        <!-- end -->
+{%endblock%}

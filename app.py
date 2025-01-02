@@ -726,6 +726,7 @@ def pesanan():
         cursor.execute('select * from keranjang where id_pelanggan=%s', (id_pelanggan,))
         isidata = cursor.fetchall()
         totalhari=0
+        totalpayment=0
         for kolom in isidata:
             durasi = request.form['durasi']
             durasi_int = int(durasi)
@@ -737,8 +738,8 @@ def pesanan():
             cursor.execute('DELETE from keranjang where id_order=%s', (kolom[0],))
             #cursor.execute("SELECT total from transaksi where id_transaksi=%s", (kolom[0],))\
             random_number_identifier = random.randint(1,1000)
-            totalpayment = (totalhari*durasi_int)+random_number_identifier
-            print(totalpayment)
+            totpay = (totalhari*durasi_int)+random_number_identifier
+            totalpayment+=totpay
             cursor.close()
             durasi = 0
             flash('Registration successful!','success')
